@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "baconjs": "^0.7.95",
+    "bluebird": "^3.5.0",
     "noble-device": "^1.4.1"
   }
 }
