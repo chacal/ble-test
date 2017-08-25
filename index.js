@@ -1,4 +1,11 @@
 const NUSDevice = require('./NUSDevice')
+const readline = require('readline')
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+})
+
 
 console.log('Scanning for devices..')
 
@@ -10,13 +17,8 @@ NUSDevice.discoverAsync()
   .then(nusDevice => nusDevice.connectAndSetupAsync())
   .tap(() => console.log('Connected'))
   .then(nusDevice => {
-    nusDevice.rx.onValue(data => console.log('Received data:', data.toString()))
-
-    var writeCount = 0
-    setInterval(() => {
-      const TEST_DATA = 'Hello world! ' + writeCount++
-      nusDevice.writeAsync(TEST_DATA)
-        .then(() => console.log('data sent:', TEST_DATA))
-    }, 3000)
+    rl.on('line', input => nusDevice.writeAsync(input)
+      .then(() => console.log('data sent:', input))
+    )
   })
   .catch(e => console.log('ERROR', e))
