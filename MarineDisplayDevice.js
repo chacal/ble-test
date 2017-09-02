@@ -28,4 +28,8 @@ MarineDisplayDevice.prototype.writeAsync = function(data) {
   return Bluebird.fromCallback(callback => this.writeDataCharacteristic(SERVICE_UUID, WRITE_CHAR_UUID, buf, callback))
 }
 
+MarineDisplayDevice.prototype.toString = function() {
+ return `${this.address} (Name: ${this._peripheral.advertisement.localName}, UUID: ${this.uuid}, RSSI: ${this._peripheral.rssi})`
+}
+
 module.exports = MarineDisplayDevice
