@@ -1,4 +1,4 @@
-const NUSDevice = require('./NUSDevice')
+const MarineDisplay = require('./MarineDisplayDevice')
 const readline = require('readline')
 
 const rl = readline.createInterface({
@@ -9,15 +9,15 @@ const rl = readline.createInterface({
 
 console.log('Scanning for devices..')
 
-NUSDevice.discoverAsync()
-  .tap(nusDevice => {
-    console.log('Discovered NUS device:', nusDevice._peripheral.advertisement.localName)
-    nusDevice.on('disconnect', () => console.log('Disconnected!'))
+MarineDisplay.discoverAsync()
+  .tap(display => {
+    console.log('Discovered Marine Display:', display._peripheral.advertisement.localName)
+    display.on('disconnect', () => console.log('Disconnected!'))
   })
-  .then(nusDevice => nusDevice.connectAndSetupAsync())
+  .then(display => display.connectAndSetupAsync())
   .tap(() => console.log('Connected'))
-  .then(nusDevice => {
-    rl.on('line', input => nusDevice.writeAsync(input)
+  .then(display => {
+    rl.on('line', input => display.writeAsync(input)
       .then(() => console.log('data sent:', input))
     )
   })
